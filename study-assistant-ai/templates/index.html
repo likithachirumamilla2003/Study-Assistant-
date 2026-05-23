@@ -1,0 +1,100 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>AI Study Assistant</title>
+
+    <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
+</head>
+<body>
+
+    <div class="container">
+
+        <div class="header">
+            <h1>AI Study Assistant 🤖</h1>
+            <p>Your Personal Learning Companion</p>
+        </div>
+
+        <div class="chat-box" id="chat-box">
+
+            <div class="bot-message">
+                Hello 👋 Ask me anything about coding, studies, AI, projects, or technology.
+            </div>
+
+        </div>
+
+        <div class="input-area">
+
+            <input
+                type="text"
+                id="user-input"
+                placeholder="Ask something..."
+            >
+
+            <button onclick="sendMessage()">
+                Send
+            </button>
+
+        </div>
+
+    </div>
+
+<script>
+
+async function sendMessage() {
+
+    let input = document.getElementById("user-input");
+
+    let message = input.value;
+
+    if(message.trim() === "") {
+        return;
+    }
+
+    let chatBox = document.getElementById("chat-box");
+
+    // User Message
+    let userDiv = document.createElement("div");
+
+    userDiv.className = "user-message";
+
+    userDiv.innerText = message;
+
+    chatBox.appendChild(userDiv);
+
+    input.value = "";
+
+    // Send to Flask
+    let response = await fetch("/chat", {
+
+        method: "POST",
+
+        headers: {
+            "Content-Type": "application/json"
+        },
+
+        body: JSON.stringify({
+            message: message
+        })
+
+    });
+
+    let data = await response.json();
+
+    // Bot Message
+    let botDiv = document.createElement("div");
+
+    botDiv.className = "bot-message";
+
+    botDiv.innerText = data.response;
+
+    chatBox.appendChild(botDiv);
+
+    chatBox.scrollTop = chatBox.scrollHeight;
+}
+
+</script>
+
+</body>
+</html>
