@@ -1,44 +1,133 @@
 <!DOCTYPE html>
 <html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>AI Study Assistant</title>
 
-    <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
+<head>
+
+    <meta charset="UTF-8">
+
+    <meta name="viewport"
+          content="width=device-width, initial-scale=1.0">
+
+    <title>Likitha's AI Study Assistant</title>
+
+    <link rel="stylesheet"
+          href="{{ url_for('static', filename='style.css') }}">
+
 </head>
+
 <body>
 
-    <div class="container">
+<div class="app-container">
 
-        <div class="header">
-            <h1>AI Study Assistant 🤖</h1>
-            <p>Your Personal Learning Companion</p>
+    <!-- SIDEBAR -->
+
+    <div class="sidebar">
+
+        <div class="logo">
+
+            <h2>🎓 Likitha's</h2>
+
+            <p>Study Assistant</p>
+
         </div>
 
-        <div class="chat-box" id="chat-box">
+        <div class="menu">
 
-            <div class="bot-message">
-                Hello 👋 Ask me anything about coding, studies, AI, projects, or technology.
+            <div class="menu-item active">
+                🏠 Home
+            </div>
+
+            <div class="menu-item">
+                💬 New Chat
+            </div>
+
+            <div class="menu-item">
+                📚 Study Topics
+            </div>
+
+            <div class="menu-item">
+                💻 Code Helper
+            </div>
+
+            <div class="menu-item">
+                ✨ AI Tools
+            </div>
+
+            <div class="menu-item">
+                🔖 Saved Chats
+            </div>
+
+            <div class="menu-item">
+                ⚙ Settings
             </div>
 
         </div>
 
+        <div class="quote-box">
+
+            <p>
+                “The beautiful thing about learning is that no one can take it away from you.”
+            </p>
+
+            <span>- B.B. King</span>
+
+        </div>
+
+    </div>
+
+    <!-- MAIN CONTENT -->
+
+    <div class="main-content">
+
+        <!-- HEADER -->
+
+        <div class="header">
+
+            <h1>
+                Likitha's AI Study Assistant ✨
+            </h1>
+
+            <p>
+                Your AI companion for smarter learning
+            </p>
+
+        </div>
+
+        <!-- CHAT AREA -->
+
+        <div class="chat-box"
+             id="chat-box">
+
+            <div class="bot-message">
+
+                👋 Hello Likhitha! I'm your AI Study Assistant.
+
+                <br><br>
+
+                Ask me anything about coding, Python,
+                interviews, AI, projects, or technology.
+
+            </div>
+
+        </div>
+
+        <!-- INPUT AREA -->
+
         <div class="input-area">
 
-            <input
-                type="text"
-                id="user-input"
-                placeholder="Ask something..."
-            >
+            <input type="text"
+                   id="user-input"
+                   placeholder="Type your message...">
 
             <button onclick="sendMessage()">
-                Send
+                ➤
             </button>
 
         </div>
 
     </div>
+
+</div>
 
 <script>
 
@@ -54,7 +143,8 @@ async function sendMessage() {
 
     let chatBox = document.getElementById("chat-box");
 
-    // User Message
+    // USER MESSAGE
+
     let userDiv = document.createElement("div");
 
     userDiv.className = "user-message";
@@ -65,7 +155,20 @@ async function sendMessage() {
 
     input.value = "";
 
-    // Send to Flask
+    // LOADING MESSAGE
+
+    let loadingDiv = document.createElement("div");
+
+    loadingDiv.className = "bot-message";
+
+    loadingDiv.innerText = "Typing...";
+
+    chatBox.appendChild(loadingDiv);
+
+    chatBox.scrollTop = chatBox.scrollHeight;
+
+    // FETCH RESPONSE
+
     let response = await fetch("/chat", {
 
         method: "POST",
@@ -82,7 +185,12 @@ async function sendMessage() {
 
     let data = await response.json();
 
-    // Bot Message
+    // REMOVE LOADING
+
+    chatBox.removeChild(loadingDiv);
+
+    // BOT RESPONSE
+
     let botDiv = document.createElement("div");
 
     botDiv.className = "bot-message";
@@ -94,7 +202,20 @@ async function sendMessage() {
     chatBox.scrollTop = chatBox.scrollHeight;
 }
 
+// ENTER KEY
+
+document.getElementById("user-input")
+.addEventListener("keypress", function(event){
+
+    if(event.key === "Enter"){
+
+        sendMessage();
+    }
+
+});
+
 </script>
 
 </body>
+
 </html>
