@@ -37,12 +37,18 @@
                 🏠 Home
             </div>
 
-            <div class="menu-item">
+            <div class="menu-item"
+                 onclick="newChat()">
+
                 💬 New Chat
+
             </div>
 
-            <div class="menu-item">
+            <div class="menu-item"
+                 onclick="showTopics()">
+
                 📚 Study Topics
+
             </div>
 
             <div class="menu-item">
@@ -57,8 +63,11 @@
                 🔖 Saved Chats
             </div>
 
-            <div class="menu-item">
+            <div class="menu-item"
+                 onclick="showSettings()">
+
                 ⚙ Settings
+
             </div>
 
         </div>
@@ -131,6 +140,8 @@
 
 <script>
 
+// SEND MESSAGE
+
 async function sendMessage() {
 
     let input = document.getElementById("user-input");
@@ -155,7 +166,7 @@ async function sendMessage() {
 
     input.value = "";
 
-    // LOADING MESSAGE
+    // LOADING
 
     let loadingDiv = document.createElement("div");
 
@@ -213,6 +224,44 @@ document.getElementById("user-input")
     }
 
 });
+
+// NEW CHAT
+
+function newChat(){
+
+    document.getElementById("chat-box").innerHTML = `
+
+    <div class="bot-message">
+
+        👋 Hello Likhitha! I'm your AI Study Assistant.
+
+        <br><br>
+
+        Ask me anything about coding, AI,
+        Python, interviews, or technology.
+
+    </div>
+
+    `;
+}
+
+// STUDY TOPICS
+
+function showTopics(){
+
+    alert(
+        "Popular Topics:\n\nPython\nJava\nDBMS\nOOPS\nAI\nMachine Learning\nWeb Development"
+    );
+}
+
+// SETTINGS
+
+function showSettings(){
+
+    alert(
+        "Settings feature coming soon 😄"
+    );
+}
 
 </script>
 
